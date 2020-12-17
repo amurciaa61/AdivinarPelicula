@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdivinarPelicula"
         mc:Ignorable="d"
-        Title="Peliculas" Height="450" Width="800">
+        Title="Peliculas"
+        Height="600"
+        Width="900">
     <Grid>
-        
+        <TabControl>
+            <TabItem Header="Jugar">
+                
+            </TabItem>
+            <TabItem Header="Gestionar">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="200" />
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="200"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0">
+                            <Button>Cargar de Gson</Button>
+                            <Button>Guardar en Gson</Button>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
