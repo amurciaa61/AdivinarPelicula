@@ -62,9 +62,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Page Include="D:\Descargas\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Link>MainWindow.xaml</Link>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -107,6 +108,32 @@
   <ItemGroup>
     <Resource Include="Imagenes\icono_aplicacion.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Imagenes\comedia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\drama.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\accion.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\terror.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\elexorcista.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\cienciaficcion.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\elpadrino.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\panico.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\arrow.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
