@@ -135,5 +135,31 @@
   <ItemGroup>
     <Resource Include="Imagenes\arrow.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="mars_attacks.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\mars_attacks.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\elbuenoelmaloelfeo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\elreyleon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\misionImposible.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\titanic.jpg" />
+    <Resource Include="Imagenes\titanic2.jpg" />
+    <Resource Include="Imagenes\torrente1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\benHur.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\elgrandictador.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
