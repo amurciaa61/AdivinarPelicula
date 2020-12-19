@@ -127,7 +127,12 @@ namespace AdivinarPelicula
         public static ObservableCollection<Pelicula> GetSamples()
         {
             ObservableCollection<Pelicula> peliculas = new ObservableCollection<Pelicula>();
-
+            peliculas.Add(new Pelicula("El gran dictador", "Como Fidel Castro, pero a lo grande",
+              "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/elgrandictador.jpg",
+              "Comedia", false, true, false));
+            peliculas.Add(new Pelicula("El padrino", "il capo",
+              "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/elpadrino.jpeg",
+              "Drama", false, true, false));
             peliculas.Add(new Pelicula("Mision imposible", "Tom Cruise en difícil acción ... ",
                 "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/misionImposible.jpg",
                 "Acción", false, true, false));
@@ -140,9 +145,6 @@ namespace AdivinarPelicula
             peliculas.Add(new Pelicula("Ben-Hur", "Un clásico de Semana Santa",
                 "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/benhur.jpg",
                 "Drama", true, false, false));
-            peliculas.Add(new Pelicula("El rey león", "Hakuna Matata",
-                "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/elreyleon.jpg",
-                "Ciencia-ficción", true, false, false));
             peliculas.Add(new Pelicula("Titanic", "Barco hundido por un iceberg",
                 "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/titanic2.jpg",
                 "Drama", true, false, false));
@@ -152,12 +154,9 @@ namespace AdivinarPelicula
             peliculas.Add(new Pelicula("El bueno, el feo y el malo", "Tres protagonistas",
                "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/elbuenoelmaloelfeo.jpg",
                "Acción", true, false, false));
-            peliculas.Add(new Pelicula("El gran dictador", "Como Fidel Castro, pero a lo grande",
-               "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/elgrandictador.jpg",
-               "Comedia", false, true, false));
-            peliculas.Add(new Pelicula("El padrino", "il capo",
-              "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/elpadrino.jpeg",
-              "Drama", false, true, false));
+            peliculas.Add(new Pelicula("El rey león", "Hakuna Matata",
+              "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/elreyleon.jpg",
+              "Ciencia-ficción", true, false, false));
 
             return peliculas;
         }
