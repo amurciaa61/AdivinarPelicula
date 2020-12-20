@@ -59,12 +59,12 @@
         <!--  Puntuaciones TextBox  -->
         <Style x:Key="puntuacionesTextBox"
                TargetType="TextBox">
-            <Setter Property="Height"
-                    Value="73" />
             <Setter Property="IsReadOnly"
                     Value="True" />
             <Setter Property="TextWrapping"
                     Value="Wrap" />
+            <Setter Property="Width"
+                    Value="105" />
         </Style>
         <!--  Titulo, Pista, Imagen TextBlock  -->
         <Style x:Key="textBlockTituloPistaImagen"
@@ -213,46 +213,52 @@
             <Setter Property="FontSize"
                     Value="14" />
         </Style>
-        
     </Window.Resources>
     <Grid>
         <TabControl>
             <TabItem Header="Jugar">
                 <DockPanel x:Name="jugarDockPanel"
                            Style="{StaticResource panelJugar}">
-                    <DockPanel Margin="0,20,0,20"
-                               HorizontalAlignment="Center"
-                               DockPanel.Dock="Bottom"
-                               LastChildFill="False">
-                        <Button Width="25"
-                                Margin="0,0,15,0"
-                                Click="FlechaAtras_Button_Click"
-                                Template="{StaticResource botonflecha}">
-                            <Image Style="{StaticResource imagenFlechas}" />
-                        </Button>
-                        <TextBlock x:Name="peliculaActualTextBlock"
-                                   VerticalAlignment="Center"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Text="0 / 0" />
-                        <Button Width="25"
-                                Margin="15,0,0,0"
-                                Click="FlechaAdelante_Button_Click"
-                                RenderTransformOrigin="0.5,0.5"
-                                Template="{StaticResource botonflecha}">
-                            <Button.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform ScaleX="-1"
-                                                    ScaleY="1" />
-                                    <SkewTransform AngleX="0"
-                                                   AngleY="0" />
-                                    <RotateTransform Angle="0" />
-                                    <TranslateTransform />
-                                </TransformGroup>
-                            </Button.RenderTransform>
-                            <Image Style="{StaticResource imagenFlechas}" />
-                        </Button>
-                    </DockPanel>
+                    <Border Margin="10"
+                            Padding="0,10"
+                            CornerRadius="5"
+                            DockPanel.Dock="Bottom"
+                            Background="#CB7877">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#FFB15B53" />
+                        </Border.Effect>
+                        <DockPanel HorizontalAlignment="Center"
+                                   LastChildFill="False">
+                            <Button Width="25"
+                                    Margin="0,0,15,0"
+                                    Click="FlechaAtras_Button_Click"
+                                    Template="{StaticResource botonflecha}">
+                                <Image Style="{StaticResource imagenFlechas}" />
+                            </Button>
+                            <TextBlock x:Name="peliculaActualTextBlock"
+                                       VerticalAlignment="Center"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Text="0 / 0" />
+                            <Button Width="25"
+                                    Margin="15,0,0,0"
+                                    Click="FlechaAdelante_Button_Click"
+                                    RenderTransformOrigin="0.5,0.5"
+                                    Template="{StaticResource botonflecha}">
+                                <Button.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"
+                                                        ScaleY="1" />
+                                        <SkewTransform AngleX="0"
+                                                       AngleY="0" />
+                                        <RotateTransform Angle="0" />
+                                        <TranslateTransform />
+                                    </TransformGroup>
+                                </Button.RenderTransform>
+                                <Image Style="{StaticResource imagenFlechas}" />
+                            </Button>
+                        </DockPanel>
+                    </Border>
                     <DockPanel Margin="20,10,0,0"
                                DockPanel.Dock="Left">
                         <TextBlock Margin="0,0,0,5"
@@ -261,7 +267,6 @@
                                    Text="Cartel de la película" />
                         <Border Width="400"
                                 Height="410"
-                                VerticalAlignment="Top"
                                 BorderBrush="Black"
                                 BorderThickness="1">
                             <Image x:Name="imagenJuegoImage"
@@ -273,88 +278,96 @@
                             </Image>
                         </Border>
                     </DockPanel>
-                    <DockPanel LastChildFill="False">
-                        <DockPanel Margin="0,10,10,0"
-                                   DockPanel.Dock="Top">
-                            <StackPanel DockPanel.Dock="Right">
-                                <Button Margin="0,25,0,0"
-                                        VerticalAlignment="Top"
-                                        Click="NuevaPartida_Button_Click">Nueva partida</Button>
-                                <Button x:Name="mostrarPuntosButton"
-                                        Margin="0,25,0,0"
-                                        VerticalAlignment="Top"
-                                        Click="MostrarOcultarDetallePuntos_Button_Click">Mostrar detalle</Button>
-                            </StackPanel>
-                            <StackPanel Name="detallePuntosStackPanel"
-                                        DockPanel.Dock="Left"
-                                        Visibility="Hidden">
-                                <TextBlock Margin="20,0,0,5"
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="170" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0"
+                              Margin="20,0,5,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="25" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition />
+                                <RowDefinition Height="70" />
+                                <RowDefinition Height="35" />
+                            </Grid.RowDefinitions>
+                            <DockPanel Grid.Row="0"
+                                       LastChildFill="False">
+                                <TextBlock x:Name="detallePuntosTextBlock"
+                                           DockPanel.Dock="Left"
+                                           Style="{StaticResource textBlockTituloPistaImagen}" />
+                                <TextBlock DockPanel.Dock="Right"
                                            Style="{StaticResource textBlockTituloPistaImagen}"
-                                           Text="Detalle puntos  " />
-                                <TextBox x:Name="puntuacionDetalleTextBox"
-                                         Margin="20,0,0,0"
+                                           Text="Puntuación total " />
+                            </DockPanel>
+                            <DockPanel Grid.Row="1"
+                                       LastChildFill="False">
+                                <TextBox DockPanel.Dock="Left"
+                                         x:Name="puntuacionDetalleTextBox"
+                                         Visibility="Hidden"
+                                         Style="{StaticResource puntuacionesTextBox}" />
+                                <TextBox DockPanel.Dock="Right"
+                                         x:Name="puntuacionTextBox"
+                                         FontSize="45"
                                          Style="{StaticResource puntuacionesTextBox}"
-                                          />
-                            </StackPanel>
-                            <StackPanel Margin="0,0,10,0"
-                                        HorizontalAlignment="Right"
-                                        Orientation="Vertical">
-                                <TextBlock Margin="0,0,0,5"
-                                           Style="{StaticResource textBlockTituloPistaImagen}"
-                                           Text="Puntuación total" />
-                                <TextBox x:Name="puntuacionTextBox"
-                                         FontSize="50"
-                                         Style="{StaticResource puntuacionesTextBox}"
-                                         TextAlignment="Center"
-                                           />
-                            </StackPanel>
-                        </DockPanel>
-                        <DockPanel Margin="20,10,10,0"
-                                   DockPanel.Dock="Top">
-                            <Button x:Name="validarButton"
-                                    Margin="0,29,0,0"
-                                    Click="Validar_Button_Click"
-                                    IsEnabled="False"
-                                    IsDefault="True"
-                                    DockPanel.Dock="Right">Validar</Button>
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Style="{StaticResource textBlockTituloPistaImagen}"
-                                           Text="Título de la película" />
-                                <TextBox x:Name="tituloPeliculaTextBox"
-                                         Margin="0,0,10,0"
-                                         Padding="0,2,0,2"
-                                         Template="{DynamicResource TextBoxControlTemplate1}"
-                                         TextWrapping="NoWrap" />
-                            </StackPanel>
-                        </DockPanel>
-                        <CheckBox x:Name="verPistaCheckBox"
-                                  Margin="20,50,0,0"
-                                  Click="DeshabilitarPista_CheckBox_Click"
-                                  Content="Ver pista"
-                                  DockPanel.Dock="Top"
-                                  FontSize="14" />
-                        <TextBlock x:Name="pistaPeliculaTextBlock"
-                                   Margin="20,5,0,50"
-                                   DockPanel.Dock="Top"
-                                   FontSize="25"
-                                   FontStyle="Italic"
-                                   Style="{StaticResource mostrarPista}"
-                                   Text="{Binding Path=Pista}"
-                                   TextWrapping="Wrap" />
-                        <StackPanel HorizontalAlignment="Center"
-                                    DockPanel.Dock="Bottom"
-                                    Orientation="Vertical">
-                            <Image x:Name="generoPeliculaImage"
-                                   Width="80"
-                                   Height="80"
+                                         TextAlignment="Center" />
+                            </DockPanel>
+                            <TextBlock Grid.Row="2"
+                                       Style="{StaticResource textBlockTituloPistaImagen}"
+                                       Text="Título de la película" />
+                            <TextBox Grid.Row="3"
+                                     x:Name="tituloPeliculaTextBox"
+                                     Padding="0,2,0,2"
+                                     Template="{DynamicResource TextBoxControlTemplate1}"
+                                     TextWrapping="NoWrap" />
+                            <CheckBox Grid.Row="4"
+                                      x:Name="verPistaCheckBox"
+                                      Margin="0,20,0,0"
+                                      Click="DeshabilitarPista_CheckBox_Click"
+                                      Content="Ver pista"
+                                      FontSize="14" />
+                            <TextBlock Grid.Row="5"
+                                       x:Name="pistaPeliculaTextBlock"
+                                       FontSize="25"
+                                       FontStyle="Italic"
+                                       Style="{StaticResource mostrarPista}"
+                                       Text="{Binding Path=Pista}"
+                                       TextWrapping="Wrap" />
+                            <Image Grid.Row="6"
+                                   x:Name="generoPeliculaImage"
+                                   Width="75"
                                    Stretch="Fill"
                                    Style="{StaticResource imagenGenero}" />
-                            <TextBlock Margin="0,5,5,20"
+                            <TextBlock Grid.Row="7"
                                        Style="{StaticResource textBlockTituloPistaImagen}"
                                        Text="Género"
                                        TextAlignment="Center" />
-                        </StackPanel>
-                    </DockPanel>
+                        </Grid>
+                        <Border Grid.Column="1"
+                                Background="#CB7877"
+                                CornerRadius="5"
+                                Margin="10,15,10,5">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#FFB15B53" />
+                            </Border.Effect>
+                            <StackPanel Grid.Row="0"
+                                        Orientation="Vertical">
+                                <Button Margin="0,20,0,15"
+                                        Click="NuevaPartida_Button_Click">Nueva partida</Button>
+                                <Button x:Name="mostrarPuntosButton"
+                                        Margin="0,0,0,26"
+                                        Click="MostrarOcultarDetallePuntos_Button_Click">Mostrar detalle</Button>
+                                <Button x:Name="validarButton"
+                                        Click="Validar_Button_Click"
+                                        IsEnabled="False"
+                                        IsDefault="True">Validar</Button>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
                 </DockPanel>
             </TabItem>
             <TabItem Header="Gestionar">

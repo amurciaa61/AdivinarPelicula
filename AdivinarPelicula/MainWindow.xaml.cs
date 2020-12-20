@@ -381,12 +381,14 @@ namespace AdivinarPelicula
             if (mostrarPuntosButton.Content.ToString() == "Mostrar detalle")
             {
                 mostrarPuntosButton.Content = "Ocultar detalle";
-                detallePuntosStackPanel.Visibility = Visibility.Visible;
+                puntuacionDetalleTextBox.Visibility = Visibility.Visible;
+                detallePuntosTextBlock.Text = "Detalle puntos";
             }
             else
             {
                 mostrarPuntosButton.Content = "Mostrar detalle";
-                detallePuntosStackPanel.Visibility = Visibility.Hidden;
+                puntuacionDetalleTextBox.Visibility = Visibility.Hidden;
+                detallePuntosTextBlock.Text = "";
             }
 
         }
