@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 
 namespace AdivinarPelicula
 {
@@ -127,36 +128,31 @@ namespace AdivinarPelicula
         public static ObservableCollection<Pelicula> GetSamples()
         {
             ObservableCollection<Pelicula> peliculas = new ObservableCollection<Pelicula>();
+            const string DIRECTORIO_IMAGENES = "Imagenes";
+            string directorioActual = Directory.GetCurrentDirectory();
+            directorioActual = Path.GetDirectoryName(directorioActual);
+            directorioActual = Path.GetDirectoryName(directorioActual);
+            directorioActual += $"{Path.DirectorySeparatorChar}{DIRECTORIO_IMAGENES}";
             peliculas.Add(new Pelicula("El gran dictador", "Como Fidel Castro, pero a lo grande",
-              "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/elgrandictador.jpg",
-              "Comedia", false, true, false));
+                          Path.Combine(directorioActual, "elgrandictador.jpg"),"Comedia", false, true, false));
             peliculas.Add(new Pelicula("El padrino", "il capo",
-              "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/elpadrino.jpeg",
-              "Drama", false, true, false));
+                          Path.Combine(directorioActual, "elpadrino.jpeg"),"Drama", false, true, false));
             peliculas.Add(new Pelicula("Mision imposible", "Tom Cruise en difícil acción ... ",
-                "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/misionImposible.jpg",
-                "Acción", false, true, false));
+                          Path.Combine(directorioActual, "misionImposible.jpg"),"Acción", false, true, false));
             peliculas.Add(new Pelicula("Torrente, el brazo tonto de la ley", "Santiago Segura, defensor de la ley con la extremidad izquierda",
-                "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/torrente1.jpg",
-                "Comedia", false, false, true));
+                          Path.Combine(directorioActual, "torrente1.jpg"),"Comedia", false, false, true));
             peliculas.Add(new Pelicula("mars attacks", "Venimos en son de paz",
-                "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/mars_attacks.jpg",
-                "Ciencia-ficción", false, false, true));
+                          Path.Combine(directorioActual, "mars_attacks.jpg"),"Ciencia-ficción", false, false, true));
             peliculas.Add(new Pelicula("Ben-Hur", "Un clásico de Semana Santa",
-                "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/benhur.jpg",
-                "Drama", true, false, false));
+                          Path.Combine(directorioActual, "benhur.jpg"),"Drama", true, false, false));
             peliculas.Add(new Pelicula("Titanic", "Barco hundido por un iceberg",
-                "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/titanic2.jpg",
-                "Drama", true, false, false));
+                          Path.Combine(directorioActual, "titanic2.jpg"),"Drama", true, false, false));
             peliculas.Add(new Pelicula("El exorcista", "Poseida por lucifer",
-                "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/elexorcista.jpg",
-                "Terror", false, false, true));
+                          Path.Combine(directorioActual, "elexorcista.jpg"),"Terror", false, false, true));
             peliculas.Add(new Pelicula("El bueno, el feo y el malo", "Tres protagonistas",
-               "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/elbuenoelmaloelfeo.jpg",
-               "Acción", true, false, false));
+                          Path.Combine(directorioActual, "elbuenoelmaloelfeo.jpg"),"Acción", true, false, false));
             peliculas.Add(new Pelicula("El rey león", "Hakuna Matata",
-              "E:/DAM2A/Desarrollo Interfaces/Proyectos/AdivinarPelicula/AdivinarPelicula/Imagenes/elreyleon.jpg",
-              "Ciencia-ficción", true, false, false));
+                          Path.Combine(directorioActual, "elreyleon.jpg"),"Ciencia-ficción", true, false, false));
 
             return peliculas;
         }
