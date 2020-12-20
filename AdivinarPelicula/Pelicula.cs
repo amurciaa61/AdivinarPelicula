@@ -129,8 +129,7 @@ namespace AdivinarPelicula
         {
             ObservableCollection<Pelicula> peliculas = new ObservableCollection<Pelicula>();
             const string DIRECTORIO_IMAGENES = "Imagenes";
-            string directorioActual = Directory.GetCurrentDirectory();
-            directorioActual = Path.GetDirectoryName(directorioActual);
+            string directorioActual = Path.GetDirectoryName(Directory.GetCurrentDirectory());
             directorioActual = Path.GetDirectoryName(directorioActual);
             directorioActual += $"{Path.DirectorySeparatorChar}{DIRECTORIO_IMAGENES}";
             peliculas.Add(new Pelicula("El gran dictador", "Como Fidel Castro, pero a lo grande",
@@ -153,7 +152,6 @@ namespace AdivinarPelicula
                           Path.Combine(directorioActual, "elbuenoelmaloelfeo.jpg"),"Acción", true, false, false));
             peliculas.Add(new Pelicula("El rey león", "Hakuna Matata",
                           Path.Combine(directorioActual, "elreyleon.jpg"),"Ciencia-ficción", true, false, false));
-
             return peliculas;
         }
     }

@@ -156,5 +156,8 @@
   <ItemGroup>
     <Resource Include="Imagenes\elgrandictador.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Datos\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

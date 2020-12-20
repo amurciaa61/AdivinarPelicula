@@ -17,6 +17,8 @@ namespace AdivinarPelicula
     /// </summary>
     public partial class MainWindow : Window
     {
+        const string DIRECTORIO_DATOS = "Datos";
+        const string DIRECTORIO_IMAGENES = "Imagenes";
         ObservableCollection<Pelicula> peliculas;
         Pelicula pelicula = new Pelicula();
         List<int> puntos = new List<int>();
@@ -47,7 +49,6 @@ namespace AdivinarPelicula
             borrarButton.IsEnabled = true;
             añadirButton.IsEnabled = false;
             AsignarForegroundPorDefecto();
-
         }
         private void AsignarForegroundPorDefecto()
         {
@@ -75,6 +76,8 @@ namespace AdivinarPelicula
                     {
                         exportarButton.IsEnabled = false;
                     }
+                    MessageBox.Show("Eliminada película: " + pelicula.Titulo, "Baja Película",
+                                    MessageBoxButton.OK, MessageBoxImage.Information);
                     pelicula = null;
                     pelicula = new Pelicula();
                     gestionarGrid.DataContext = pelicula;
@@ -128,6 +131,8 @@ namespace AdivinarPelicula
                 else
                 {
                     peliculas.Add(pelicula);
+                    MessageBox.Show("Añadida película: " + pelicula.Titulo, "Alta Película",
+                                     MessageBoxButton.OK, MessageBoxImage.Information);
                     pelicula = null;
                     pelicula = new Pelicula();
                     gestionarGrid.DataContext = pelicula;
@@ -143,40 +148,43 @@ namespace AdivinarPelicula
         }
         private void Importar_Json_Button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult respuesta = MessageBox.Show("Se van a borrar las películas de la lista, ¿conforme?", "Conformidad",
-                                                         MessageBoxButton.OKCancel, MessageBoxImage.Question);
-            if (respuesta == MessageBoxResult.OK)
+            if (peliculas.Count > 0)
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                List<Pelicula> pl;
-                openFileDialog.InitialDirectory = Directory.GetCurrentDirectory();
-                openFileDialog.Filter = "Json files |*.json";
-                try
+                MessageBoxResult respuesta = MessageBox.Show("Se van a recargar las películas, ¿conforme?", "Conformidad",
+                                                             MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                if (respuesta == MessageBoxResult.OK)
                 {
-                    if (openFileDialog.ShowDialog() == true)
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    List<Pelicula> pl;
+                    openFileDialog.InitialDirectory = DirectorioActual(DIRECTORIO_DATOS);
+                    openFileDialog.Filter = "Json files |*.json";
+                    try
                     {
-                        using (StreamReader jsonStream = File.OpenText(openFileDialog.FileName))
+                        if (openFileDialog.ShowDialog() == true)
                         {
-                            peliculas.Clear();  // Limpiamos la lista de películas
-                            var json = jsonStream.ReadToEnd();
-                            pl = JsonConvert.DeserializeObject<List<Pelicula>>(json);
-                            foreach (Pelicula peli in pl)
+                            using (StreamReader jsonStream = File.OpenText(openFileDialog.FileName))
                             {
-                                peliculas.Add(peli);
+                                peliculas.Clear();  // Limpiamos la lista de películas
+                                var json = jsonStream.ReadToEnd();
+                                pl = JsonConvert.DeserializeObject<List<Pelicula>>(json);
+                                foreach (Pelicula peli in pl)
+                                {
+                                    peliculas.Add(peli);
+                                }
                             }
+                            MessageBox.Show("Se ha importado el fichero JSON: " + openFileDialog.FileName,
+                                            "Importacion Json", MessageBoxButton.OK, MessageBoxImage.Information);
+                            borrarButton.IsEnabled = false;
+                            añadirButton.IsEnabled = true;
+                            pelicula = null;
+                            pelicula = new Pelicula();
+                            gestionarGrid.DataContext = pelicula;
                         }
-                        MessageBox.Show("Se ha importado el fichero JSON: " + openFileDialog.FileName,
-                                        "Importacion Json", MessageBoxButton.OK, MessageBoxImage.Information);
-                        borrarButton.IsEnabled = false;
-                        añadirButton.IsEnabled = true;
-                        pelicula = null;
-                        pelicula = new Pelicula();
-                        gestionarGrid.DataContext = pelicula;
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
         }
@@ -184,6 +192,7 @@ namespace AdivinarPelicula
         {
             string peliculasJson = JsonConvert.SerializeObject(peliculas);
             SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = DirectorioActual(DIRECTORIO_DATOS);
             saveFileDialog.Filter = "Json files |*.json";
             saveFileDialog.AddExtension = true;
             saveFileDialog.DefaultExt = "json";
@@ -204,7 +213,7 @@ namespace AdivinarPelicula
         private void SeleccionarImagen_Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Directory.GetCurrentDirectory();
+            openFileDialog.InitialDirectory = DirectorioActual(DIRECTORIO_IMAGENES);
             openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.ico";
             try
             {
@@ -230,9 +239,10 @@ namespace AdivinarPelicula
             {
                 puntos.Clear();
                 detalleJugadas.Clear();
-                puntuacionTextBox.Text = "";
+                puntuacionTextBox.Text = "0";
                 puntuacionDetalleTextBox.Text = "";
                 verPistaCheckBox.IsEnabled = true;
+                validarButton.IsEnabled = true;
                 for (int i = 0; i < NUMERO_JUGADAS; i++)
                 {
                     puntos.Add(0);
@@ -282,7 +292,7 @@ namespace AdivinarPelicula
         private void FlechaAdelante_Button_Click(object sender, RoutedEventArgs e)
         {
             AvanzarPeliculaJuego();
-            
+
         }
         private void AvanzarPeliculaJuego()
         {
@@ -307,7 +317,7 @@ namespace AdivinarPelicula
         {
             int puntuacion = 0;
             int indice = ObtenerIndiceActual() - 1;
-            string textoJugada = "";
+            string textoJugada = "";   // para guardar el detalle de la jugada
             if (tituloPeliculaTextBox.Text.Length > 0 &&
                 peliculasJuego[indice].Titulo.ToUpper() == tituloPeliculaTextBox.Text.ToUpper())
             {
@@ -331,17 +341,16 @@ namespace AdivinarPelicula
             {
                 textoJugada = "No acumulas puntos.";
             }
-            if (verPistaCheckBox.IsChecked == true)
+            if (verPistaCheckBox.IsChecked == true && puntuacion > 0)
             {
                 puntuacion /= 2;
                 textoJugada += "\n, pero divides por 2, has usado la pista";
             }
-            puntos[indice] = puntuacion;
-            detalleJugadas[indice] = textoJugada;
+            puntos[indice] = puntuacion;            // Guardamos puntos de cada partida
+            detalleJugadas[indice] = textoJugada;   // Guardamos detalle de cada partida
 
             MuestraPuntos();
-            AvanzarPeliculaJuego();
-
+            AvanzarPeliculaJuego();  // Avanzamos a película siguiente de forma automática
         }
         public void MuestraPuntos()
         {
@@ -350,17 +359,16 @@ namespace AdivinarPelicula
             for (int i = 0; i < puntos.Count; i++)
             {
                 puntosTotales += puntos[i];
-                int j = i + 1;
                 textoJugadas.Append("** Jugada ");
-                textoJugadas.Append(j);
+                textoJugadas.Append(i + 1);
                 textoJugadas.Append(": ");
                 textoJugadas.Append(puntos[i]);
                 textoJugadas.Append("\n");
                 textoJugadas.Append(detalleJugadas[i]);
                 textoJugadas.Append("\n");
             }
-            puntuacionTextBox.Text = puntosTotales.ToString();
-            puntuacionDetalleTextBox.Text = textoJugadas.ToString();
+            puntuacionTextBox.Text = puntosTotales.ToString();       // Cantidad numérica de puntos
+            puntuacionDetalleTextBox.Text = textoJugadas.ToString(); // Detalle de las jugadas y puntos por jugada
         }
 
         private void DeshabilitarPista_CheckBox_Click(object sender, RoutedEventArgs e)
@@ -380,7 +388,15 @@ namespace AdivinarPelicula
                 mostrarPuntosButton.Content = "Mostrar detalle";
                 detallePuntosStackPanel.Visibility = Visibility.Hidden;
             }
-                
+
+        }
+        static private string DirectorioActual(string directorioFinal)
+        {
+            // Proponemos el directorio deseado para el OpenDialog y SaveDialog
+            string directorioActual = Path.GetDirectoryName(Directory.GetCurrentDirectory());
+            directorioActual = Path.GetDirectoryName(directorioActual);
+            directorioActual += Path.DirectorySeparatorChar + directorioFinal;
+            return directorioActual;
         }
     }
 }
