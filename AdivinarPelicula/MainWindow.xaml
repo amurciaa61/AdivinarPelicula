@@ -295,27 +295,43 @@
                                 <RowDefinition Height="70" />
                                 <RowDefinition Height="35" />
                             </Grid.RowDefinitions>
-                            <DockPanel Grid.Row="0"
-                                       LastChildFill="False">
-                                <TextBlock x:Name="detallePuntosTextBlock"
-                                           DockPanel.Dock="Left"
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0"
+                                           x:Name="detallePuntosTextBlock"
                                            Style="{StaticResource textBlockTituloPistaImagen}" />
-                                <TextBlock DockPanel.Dock="Right"
+                                <TextBlock Grid.Column="1"
+                                           Text="Puntos jugada"
+                                           Style="{StaticResource textBlockTituloPistaImagen}" />
+                                <TextBlock Grid.Column="2"
                                            Style="{StaticResource textBlockTituloPistaImagen}"
                                            Text="Puntuación total " />
-                            </DockPanel>
-                            <DockPanel Grid.Row="1"
-                                       LastChildFill="False">
-                                <TextBox DockPanel.Dock="Left"
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0"
                                          x:Name="puntuacionDetalleTextBox"
                                          Visibility="Hidden"
                                          Style="{StaticResource puntuacionesTextBox}" />
-                                <TextBox DockPanel.Dock="Right"
+                                <TextBox Grid.Column="1"
+                                         x:Name="puntuacionJugadaTextBox"
+                                         FontSize="45"
+                                         Style="{StaticResource puntuacionesTextBox}"
+                                         TextAlignment="Center" />
+                                <TextBox Grid.Column="2"
                                          x:Name="puntuacionTextBox"
                                          FontSize="45"
                                          Style="{StaticResource puntuacionesTextBox}"
                                          TextAlignment="Center" />
-                            </DockPanel>
+                            </Grid>
                             <TextBlock Grid.Row="2"
                                        Style="{StaticResource textBlockTituloPistaImagen}"
                                        Text="Título de la película" />

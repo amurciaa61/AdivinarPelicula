@@ -240,6 +240,7 @@ namespace AdivinarPelicula
                 puntos.Clear();
                 detalleJugadas.Clear();
                 puntuacionTextBox.Text = "0";
+                puntuacionJugadaTextBox.Text = "0";
                 puntuacionDetalleTextBox.Text = "";
                 verPistaCheckBox.IsEnabled = true;
                 validarButton.IsEnabled = true;
@@ -287,6 +288,7 @@ namespace AdivinarPelicula
                 int indice = indiceActual == 1 ? 1 : indiceActual - 1;
                 BindingDelObjeto(indice);
                 ActualizarIndice(indice);
+                MostrarPuntosJugada(indice-1);
             }
         }
         private void FlechaAdelante_Button_Click(object sender, RoutedEventArgs e)
@@ -305,7 +307,12 @@ namespace AdivinarPelicula
                 int indice = indiceActual == peliculasJuego.Count ? peliculasJuego.Count : indiceActual + 1;
                 BindingDelObjeto(indice);
                 ActualizarIndice(indice);
+                MostrarPuntosJugada(indice-1);
             }
+        }
+        private void MostrarPuntosJugada(int indice)
+        {
+            puntuacionJugadaTextBox.Text = puntos[indice].ToString();
         }
         public int ObtenerIndiceActual()
         {
@@ -348,7 +355,7 @@ namespace AdivinarPelicula
             }
             puntos[indice] = puntuacion;            // Guardamos puntos de cada partida
             detalleJugadas[indice] = textoJugada;   // Guardamos detalle de cada partida
-
+            MostrarPuntosJugada(indice);
             MuestraPuntos();
             AvanzarPeliculaJuego();  // Avanzamos a película siguiente de forma automática
         }
