@@ -19,35 +19,30 @@ namespace AdivinarPelicula
     {
         const string DIRECTORIO_DATOS = "Datos";
         const string DIRECTORIO_IMAGENES = "Imagenes";
+        const int PUNTOS_FACIL = 10;
+        const int PUNTOS_NORMAL = 20;
+        const int PUNTOS_DIFICIL = 30;
         ObservableCollection<Pelicula> peliculas;
         Pelicula pelicula = new Pelicula();
         List<int> puntos = new List<int>();
         List<string> detalleJugadas = new List<string>();
         List<Pelicula> peliculasJuego = new List<Pelicula>();
-        const int PUNTOS_FACIL = 10;
-        const int PUNTOS_NORMAL = 20;
-        const int PUNTOS_DIFICIL = 30;
         public MainWindow()
         {
             InitializeComponent();
-            borrarButton.IsEnabled = false;
             gestionarGrid.DataContext = pelicula;
             peliculas = Pelicula.GetSamples();
             ObservableCollection<string> tipoGenero = new ObservableCollection<string> { "Acción", "Drama", "Comedia", "Terror", "Ciencia-ficción" };
             generoComboBox.ItemsSource = tipoGenero;
             listaListBox.DataContext = peliculas;
-            if (peliculas.Count == 0)
-            {
-                exportarButton.IsEnabled = false;
-            }
         }
 
         private void ListaListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             gestionarGrid.DataContext = pelicula;
             gestionarGrid.DataContext = (sender as ListBox).SelectedItem;
+            insertarButton.IsEnabled = false;
             borrarButton.IsEnabled = true;
-            añadirButton.IsEnabled = false;
             AsignarForegroundPorDefecto();
         }
         private void AsignarForegroundPorDefecto()
@@ -60,7 +55,7 @@ namespace AdivinarPelicula
         private void Borrar_Button_Click(object sender, RoutedEventArgs e)
         {
             pelicula = (Pelicula)gestionarGrid.DataContext;
-            if (listaListBox.SelectedIndex < 0)
+            if (listaListBox.SelectedIndex < 0 || !peliculas.Contains(pelicula))
                 MessageBox.Show("Debe seleccionar la película a borrar", "Borrar película",
                                  MessageBoxButton.OK, MessageBoxImage.Exclamation);
             else
@@ -70,12 +65,6 @@ namespace AdivinarPelicula
                 if (respuesta == MessageBoxResult.OK)
                 {
                     peliculas.Remove(pelicula);
-                    borrarButton.IsEnabled = false;
-                    añadirButton.IsEnabled = true;
-                    if (peliculas.Count == 0)
-                    {
-                        exportarButton.IsEnabled = false;
-                    }
                     MessageBox.Show("Eliminada película: " + pelicula.Titulo, "Baja Película",
                                     MessageBoxButton.OK, MessageBoxImage.Information);
                     pelicula = null;
@@ -84,107 +73,101 @@ namespace AdivinarPelicula
                 }
             }
         }
+
         private void AñadirPelicula_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (listaListBox.SelectedIndex < 0)
+            pelicula = null;
+            pelicula = new Pelicula();
+            gestionarGrid.DataContext = pelicula;
+            tituloTextBox.Focus();
+            insertarButton.IsEnabled = true;
+            borrarButton.IsEnabled = false;
+        }
+        private void InsertarPelicula_Button_Click(object sender, RoutedEventArgs e)
+        {
+            bool error = false;
+            if (pelicula.Titulo == null)
             {
-                bool error = false;
-                if (pelicula.Titulo == null)
-                {
-                    error = true;
-                    tituloTextBox.Background = Brushes.Red;
-                }
-                else
-                    tituloTextBox.Background = Brushes.White;
-                if (pelicula.Pista == null)
-                {
-                    error = true;
-                    pistaTextBox.Background = Brushes.Red;
-                }
-                else
-                    pistaTextBox.Background = Brushes.White;
-                if (pelicula.Imagen == null)
-                {
-                    error = true;
-                    imagenTextBox.Background = Brushes.Red;
-                }
-                else
-                    imagenTextBox.Background = Brushes.White;
-                if (!pelicula.Facil &&
-                    !pelicula.Normal &&
-                    !pelicula.Dificil)
-                {
-                    facilRadioButton.IsChecked = true;
-                }
-                if (pelicula.Genero == null)
-                {
-                    error = true;
-                    generoTextBlock.Foreground = Brushes.Red;
-                }
-                else
-                    generoTextBlock.Foreground = Brushes.Black;
-                if (error)
-                {
-                    MessageBox.Show("Debe rellenar los campos marcados en rojo", "Alta película",
-                                    MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                else
-                {
-                    peliculas.Add(pelicula);
-                    MessageBox.Show("Añadida película: " + pelicula.Titulo, "Alta Película",
-                                     MessageBoxButton.OK, MessageBoxImage.Information);
-                    pelicula = null;
-                    pelicula = new Pelicula();
-                    gestionarGrid.DataContext = pelicula;
-                    exportarButton.IsEnabled = true;
-                }
+                error = true;
+                tituloTextBox.Background = Brushes.Red;
+            }
+            else
+                tituloTextBox.Background = Brushes.White;
+            if (pelicula.Pista == null)
+            {
+                error = true;
+                pistaTextBox.Background = Brushes.Red;
+            }
+            else
+                pistaTextBox.Background = Brushes.White;
+            if (pelicula.Imagen == null)
+            {
+                error = true;
+                imagenTextBox.Background = Brushes.Red;
+            }
+            else
+                imagenTextBox.Background = Brushes.White;
+            if (!pelicula.Facil &&
+                !pelicula.Normal &&
+                !pelicula.Dificil)
+            {
+                facilRadioButton.IsChecked = true;
+            }
+            if (pelicula.Genero == null)
+            {
+                error = true;
+                generoTextBlock.Foreground = Brushes.Red;
+            }
+            else
+                generoTextBlock.Foreground = Brushes.Black;
+            if (error)
+            {
+                MessageBox.Show("Debe rellenar los campos marcados en rojo", "Alta película",
+                                MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
-                MessageBox.Show("Tiene una película seleccionada, no se permite el ALTA", "Alta película",
-                                 MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                peliculas.Add(pelicula);
+                MessageBox.Show("Añadida película: " + pelicula.Titulo, "Alta Película",
+                                 MessageBoxButton.OK, MessageBoxImage.Information);
+                insertarButton.IsEnabled = false;
             }
 
         }
         private void Importar_Json_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (peliculas.Count > 0)
+            MessageBoxResult respuesta = MessageBox.Show("Se van a recargar las películas, ¿conforme?", "Conformidad",
+                                                         MessageBoxButton.OKCancel, MessageBoxImage.Question);
+            if (respuesta == MessageBoxResult.OK)
             {
-                MessageBoxResult respuesta = MessageBox.Show("Se van a recargar las películas, ¿conforme?", "Conformidad",
-                                                             MessageBoxButton.OKCancel, MessageBoxImage.Question);
-                if (respuesta == MessageBoxResult.OK)
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                List<Pelicula> pl;
+                openFileDialog.InitialDirectory = DirectorioActual(DIRECTORIO_DATOS);
+                openFileDialog.Filter = "Json files |*.json";
+                try
                 {
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    List<Pelicula> pl;
-                    openFileDialog.InitialDirectory = DirectorioActual(DIRECTORIO_DATOS);
-                    openFileDialog.Filter = "Json files |*.json";
-                    try
+                    if (openFileDialog.ShowDialog() == true)
                     {
-                        if (openFileDialog.ShowDialog() == true)
+                        using (StreamReader jsonStream = File.OpenText(openFileDialog.FileName))
                         {
-                            using (StreamReader jsonStream = File.OpenText(openFileDialog.FileName))
+                            peliculas.Clear();  // Limpiamos la lista de películas
+                            var json = jsonStream.ReadToEnd();
+                            pl = JsonConvert.DeserializeObject<List<Pelicula>>(json);
+                            foreach (Pelicula peli in pl)
                             {
-                                peliculas.Clear();  // Limpiamos la lista de películas
-                                var json = jsonStream.ReadToEnd();
-                                pl = JsonConvert.DeserializeObject<List<Pelicula>>(json);
-                                foreach (Pelicula peli in pl)
-                                {
-                                    peliculas.Add(peli);
-                                }
+                                peliculas.Add(peli);
                             }
-                            MessageBox.Show("Se ha importado el fichero JSON: " + openFileDialog.FileName,
-                                            "Importacion Json", MessageBoxButton.OK, MessageBoxImage.Information);
-                            borrarButton.IsEnabled = false;
-                            añadirButton.IsEnabled = true;
-                            pelicula = null;
-                            pelicula = new Pelicula();
-                            gestionarGrid.DataContext = pelicula;
                         }
+                        MessageBox.Show("Se ha importado el fichero JSON: " + openFileDialog.FileName,
+                                        "Importacion Json", MessageBoxButton.OK, MessageBoxImage.Information);
+                        pelicula = null;
+                        pelicula = new Pelicula();
+                        gestionarGrid.DataContext = pelicula;
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -288,7 +271,7 @@ namespace AdivinarPelicula
                 int indice = indiceActual == 1 ? 1 : indiceActual - 1;
                 BindingDelObjeto(indice);
                 ActualizarIndice(indice);
-                MostrarPuntosJugada(indice-1);
+                MostrarPuntosJugada(indice - 1);
             }
         }
         private void FlechaAdelante_Button_Click(object sender, RoutedEventArgs e)
@@ -307,7 +290,7 @@ namespace AdivinarPelicula
                 int indice = indiceActual == peliculasJuego.Count ? peliculasJuego.Count : indiceActual + 1;
                 BindingDelObjeto(indice);
                 ActualizarIndice(indice);
-                MostrarPuntosJugada(indice-1);
+                MostrarPuntosJugada(indice - 1);
             }
         }
         private void MostrarPuntosJugada(int indice)
@@ -401,7 +384,7 @@ namespace AdivinarPelicula
         }
         static private string DirectorioActual(string directorioFinal)
         {
-            // Proponemos el directorio deseado para el OpenDialog y SaveDialog
+            // Proponemos el directorio deseado para el OpenDialog, SaveDialog y Seleccion de imagenes
             string directorioActual = Path.GetDirectoryName(Directory.GetCurrentDirectory());
             directorioActual = Path.GetDirectoryName(directorioActual);
             directorioActual += Path.DirectorySeparatorChar + directorioFinal;

@@ -132,6 +132,7 @@ namespace AdivinarPelicula
             string directorioActual = Path.GetDirectoryName(Directory.GetCurrentDirectory());
             directorioActual = Path.GetDirectoryName(directorioActual);
             directorioActual += $"{Path.DirectorySeparatorChar}{DIRECTORIO_IMAGENES}";
+     
             peliculas.Add(new Pelicula("El gran dictador", "Como Fidel Castro, pero a lo grande",
                           Path.Combine(directorioActual, "elgrandictador.jpg"),"Comedia", false, true, false));
             peliculas.Add(new Pelicula("El padrino", "il capo",
@@ -152,6 +153,7 @@ namespace AdivinarPelicula
                           Path.Combine(directorioActual, "elbuenoelmaloelfeo.jpg"),"Acción", true, false, false));
             peliculas.Add(new Pelicula("El rey león", "Hakuna Matata",
                           Path.Combine(directorioActual, "elreyleon.jpg"),"Ciencia-ficción", true, false, false));
+
             return peliculas;
         }
     }

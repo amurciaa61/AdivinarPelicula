@@ -13,7 +13,7 @@
         mc:Ignorable="d">
     <Window.Resources>
         <!--  Botones  -->
-        <Style TargetType="Button">
+        <Style TargetType="{x:Type Button}">
             <Setter Property="Width"
                     Value="120" />
             <Setter Property="Height"
@@ -26,6 +26,57 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <!-- Desactivar boton Bajas cuando no hay elemento seleccionado o cuando no hay elemento en la lista -->
+        <Style TargetType="Button"
+               x:Key="botonbajas"
+               BasedOn="{StaticResource ResourceKey={x:Type Button}}">
+            <Setter Property="IsEnabled"
+                    Value="True" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=listaListBox,Path=SelectedIndex}"
+                             Value="-1">
+                    <Setter Property="IsEnabled"
+                            Value="False" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=listaListBox,Path=Items.Count}"
+                             Value="0">
+                    <Setter Property="IsEnabled"
+                            Value="False" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=insertarButton,Path=IsEnabled}"
+                             Value="True">
+                    <Setter Property="IsEnabled"
+                            Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <!-- Desactivar boton de Guardar en Json cuando la lista esta vacía -->
+        <Style TargetType="Button"
+               x:Key="botonguardarJson"
+               BasedOn="{StaticResource ResourceKey={x:Type Button}}">
+            <Setter Property="IsEnabled"
+                    Value="True" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=listaListBox,Path=Items.Count}"
+                             Value="0">
+                    <Setter Property="IsEnabled"
+                            Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <!-- Desactivar boton de Insertar Pelicula si hay algun elemento de la lista seleccionado 
+        <Style TargetType="Button"
+               x:Key="insertarPelicula" BasedOn="{StaticResource ResourceKey={x:Type Button}}">
+            <Setter Property="IsEnabled"
+                    Value="False" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=listaListBox,Path=SelectedIndex}"
+                             Value="-1">
+                    <Setter Property="IsEnabled"
+                            Value="True" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>-->
         <!--  Plantilla ListBox  -->
         <DataTemplate DataType="{x:Type local:Pelicula}">
             <Border Width="150"
@@ -507,14 +558,19 @@
                             <StackPanel Grid.Row="0">
                                 <Button Click="Importar_Json_Button_Click">Cargar de Json</Button>
                                 <Button Name="exportarButton"
+                                        Style="{StaticResource botonguardarJson}"
                                         Click="Exportar_Json_Button_Click">Guardar en Json</Button>
                             </StackPanel>
                             <StackPanel Grid.Row="1">
                                 <Button x:Name="borrarButton"
                                         Click="Borrar_Button_Click"
+                                        Style="{StaticResource botonbajas}"
                                         ToolTip="Recuerda: Para borrar debes seleccionar previamente una película, en caso contrario el botón estará deshabilitado">Eliminar película</Button>
                                 <Button x:Name="añadirButton"
                                         Click="AñadirPelicula_Button_Click">Añadir película</Button>
+                                <Button x:Name="insertarButton"
+                                        IsEnabled="False"
+                                        Click="InsertarPelicula_Button_Click">Insertar película</Button>
                             </StackPanel>
                             <StackPanel Grid.Row="2">
                                 <Button Click="SeleccionarImagen_Button_Click">Examinar</Button>
