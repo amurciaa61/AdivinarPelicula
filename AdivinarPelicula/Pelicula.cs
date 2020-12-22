@@ -146,7 +146,7 @@ namespace AdivinarPelicula
             peliculas.Add(new Pelicula("Ben-Hur", "Un clásico de Semana Santa",
                           Path.Combine(directorioActual, "benhur.jpg"),"Drama", true, false, false));
             peliculas.Add(new Pelicula("Titanic", "Barco hundido por un iceberg",
-                          Path.Combine(directorioActual, "titanic2.jpg"),"Drama", true, false, false));
+                          Path.Combine(directorioActual, "titanic.jpg"),"Drama", true, false, false));
             peliculas.Add(new Pelicula("El exorcista", "Poseida por lucifer",
                           Path.Combine(directorioActual, "elexorcista.jpg"),"Terror", false, false, true));
             peliculas.Add(new Pelicula("El bueno, el feo y el malo", "Tres protagonistas",

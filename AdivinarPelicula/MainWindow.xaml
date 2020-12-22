@@ -312,19 +312,38 @@
                     </Border>
                     <DockPanel Margin="20,10,0,0"
                                DockPanel.Dock="Left">
-                        <TextBlock Margin="0,0,0,5"
+                        <TextBlock Margin="0,10,0,5"
+                                   Padding="8"
                                    DockPanel.Dock="Top"
-                                   Style="{StaticResource textBlockTituloPistaImagen}"
-                                   Text="Cartel de la película" />
-                        <Border Width="400"
-                                Height="410"
+                                   FontSize="48"
+                                   TextAlignment="Center"
+                                   Width="250"
+                                   TextWrapping="Wrap"
+                                   Foreground="White"
+                                   FontStyle="Oblique"
+                                   Text="Cartel de la película"
+                                   FontFamily="Matura MT Script Capitals">
+                            <TextBlock.Background>
+                                <LinearGradientBrush EndPoint="0.5,1"
+                                                     StartPoint="0.5,0">
+                                    <GradientStop Color="#EECCCA"
+                                                  Offset="0" />
+                                    <GradientStop Color="#CB7877"
+                                                  Offset="1" />
+                                </LinearGradientBrush>
+                            </TextBlock.Background>
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="#FFB15B53" />
+                            </TextBlock.Effect></TextBlock>
+                        <Border Width="360"
+                                Height="250"
                                 BorderBrush="Black"
                                 BorderThickness="1">
                             <Image x:Name="imagenJuegoImage"
                                    Source="{Binding Path=Imagen}"
-                                   Stretch="Uniform">
+                                   Stretch="UniformToFill">
                                 <Image.Effect>
-                                    <BlurEffect Radius="15" />
+                                    <BlurEffect Radius="7" />
                                 </Image.Effect>
                             </Image>
                         </Border>

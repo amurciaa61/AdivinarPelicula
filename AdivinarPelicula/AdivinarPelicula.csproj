@@ -159,5 +159,8 @@
   <ItemGroup>
     <Folder Include="Datos\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\mars-attacks-2.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
